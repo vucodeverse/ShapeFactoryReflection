@@ -1,8 +1,8 @@
 package org.designpatterm.view;
 
 /**
- * ShapeView is responsible for displaying shape information to the console.
- * It formats and prints the header and body content related to a shape.
+ * ShapeView chịu trách nhiệm hiển thị thông tin lên bảng điều khiển.
+ * Nó định dạng và in nội dung tiêu đề và nội dung chính liên quan đến một hình dạng.
  */
 public class ShapeView {
     private String header;
@@ -26,7 +26,7 @@ public class ShapeView {
     }
 
     /**
-     * Displays the shape information to the console.
+     * Hiển thị thông tin hình dạng ra bảng điều khiển.
      */
     public void displayViewShape() {
         System.out.printf("%s", header);

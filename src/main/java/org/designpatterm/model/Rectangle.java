@@ -4,13 +4,25 @@ import org.designpatterm.constant.ShapeName;
 
 public class Rectangle extends Shape{
 
+    /**
+     * Chiều dài của hình chữ nhật
+     */
     private double length;
+
+    /**
+     * Chiều rộng của hình chữ nhật
+     */
     private double width;
 
 
-    //Parameter Constructor
-    public Rectangle(ShapeName shapeName, double length, double width) {
-        super(shapeName);
+    /**
+     * Constructor khởi tạo Rectangle với chiều dài và chiều rộng
+     *
+     * @param length chiều dài
+     * @param width  chiều rộng
+     */
+    public Rectangle(double length, double width) {
+        super(ShapeName.RECTANGLE);
         this.length = length;
         this.width = width;
     }
@@ -32,15 +44,24 @@ public class Rectangle extends Shape{
         this.width = width;
     }
 
-    //Calculate Area of Rectangle
+    /**
+     * Tính diện tích hình chữ nhật
+     *
+     * @return diện tích = length * width
+     */
     @Override
     public double calculateArea() {
-        return 0;
+        return length * width;
     }
 
-    //Calculate Perimeter of Rectangle
+    /**
+     * Tính chu vi hình chữ nhật
+     *
+     * @return chu vi = 2 * (length + width)
+     */
     @Override
     public double calculatePerimeter() {
-        return 0;
+        return 2 * (length + width);
     }
+
 }

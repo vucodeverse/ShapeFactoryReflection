@@ -41,5 +41,18 @@ public class Validation {
             throw new AppException("Please input number > 0");
     }
 
+    /**
+     * Check the validity of a triangle based on the lengths of its three sides.
+     *
+     * @param a length of the first side
+     * @param b length of the second side
+     * @param c length of the third side
+     * @throws AppException if the three sides do not satisfy the condition of forming a triangle.
+     */
+    public static void validateTriangle(double a, double b, double c) throws AppException {
+        if (a + b <= c || a + c <= b || b + c <= a) {
+            throw new AppException("Ba cạnh không tạo thành tam giác");
+        }
+    }
 
 }

@@ -17,4 +17,16 @@ public class AppException extends Exception {
     public AppException(String message) {
         super(message);
     }
+
+
+    /**
+     * Bao bọc các Exception khác như ReflectionException, IllegalArgumentException, etc.
+     * Lưu giữ stack traces để phục vụ mục đích gỡ lỗi/ghi nhật ký.
+     *
+     * @param message Business error message
+     * @param cause   The root cause of the error
+     */
+    public AppException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
