@@ -3,40 +3,84 @@ package org.designpatterm.controller;
 import org.designpatterm.dto.ShapeDTO;
 import org.designpatterm.factory.ShapeFactory;
 import org.designpatterm.model.Shape;
+import org.designpatterm.utils.AppException;
 import org.designpatterm.view.ShapeView;
 
 public class ShapeController {
+    /**
+     * DTO chứa dữ liệu đầu vào (ShapeName + dimensions)
+     */
     private ShapeDTO shapeDTO;
-    private ShapeFactory shapeFactory;
-    private ShapeView shapeView;
 
+    /**
+     * Factory chịu trách nhiệm tạo đối tượng Shape
+     */
+    private final ShapeFactory shapeFactory;
+
+    /**
+     * View chịu trách nhiệm hiển thị kết quả
+     */
+    private final ShapeView shapeView;
+
+    /**
+     * Khởi tạo Controller với Factory và View mặc định
+     */
+    public ShapeController() {
+        this.shapeFactory = new ShapeFactory();
+        this.shapeView = new ShapeView();
+    }
+
+    /**
+     * Inject ShapeDTO từ bên ngoài
+     *
+     * @param shapeDTO dữ liệu cần xử lý
+     */
     public void setShapeDTO(ShapeDTO shapeDTO) {
         this.shapeDTO = shapeDTO;
     }
 
-    public void setShapeFactory(ShapeFactory shapeFactory) {
-        this.shapeFactory = shapeFactory;
+    /**
+     * Thiết lập nội dung cho View và hiển thị kết quả
+     *
+     * @param header tiêu đề
+     * @param body   nội dung kết quả
+     */
+    private void displayResult(String header, String body) {
+        shapeView.setHeader(header);
+        shapeView.setBody(body);
+        shapeView.displayViewShape();
     }
 
-    public void processShape() {
+
+    /**
+     * Xử lý nghiệp vụ chính:
+     * - Kiểm tra DTO
+     * - Tạo Shape thông qua Factory
+     * - Tính diện tích và chu vi
+     * - Hiển thị kết quả ra View
+     *
+     * @throws AppException nếu dữ liệu không hợp lệ hoặc lỗi tạo Shape
+     */
+    public void processShape() throws AppException {
         try {
-            if (shapeFactory == null) {
-                throw new IllegalStateException("Factory chưa được khởi tạo!");
-            }
+            // Kiểm tra DTO đã được truyền vào hay chưa
             if (shapeDTO == null) {
-                throw new IllegalStateException("ShapeDTO chưa được gán dữ liệu!");
+                throw new AppException("ShapeDTO chưa được khởi tạo");
             }
 
-            Shape shape = shapeFactory.createShape(shapeDTO);
-            double area = shape.calculateArea();
-            double perimeter = shape.calculatePerimeter();
+            // Tạo đối tượng Shape dựa trên dữ liệu trong DTO
+            Shape shape = shapeFactory.createShape(shapeDTO.getShapeName(), shapeDTO.getDimensions());
 
-            System.out.println("Shape: " + shapeDTO.getShapeName().getDisplayName());
-            System.out.println("Area: " + area);
-            System.out.println("Perimeter: " + perimeter);
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            // Tạo header cho bảng kết quả
+            String header = String.format("|%-15s|%-15s|%-15s\n", "Shape", "Area", "Perimeter");
+            // Tạo body chứa kết quả tính toán
+            String body = String.format("|%-15s|%-15.4f|%-15.4f\n", shapeDTO.getShapeName(),
+                    shape.calculateArea(), shape.calculatePerimeter());
+            // Hiển thị kết quả
+            displayResult(header, body);
+        } catch (AppException e) {
+            // Bọc exception lại để thống nhất xử lý lỗi
+            throw new AppException(e.getMessage());
         }
     }
 
