@@ -15,19 +15,15 @@ public class ShapeController {
     /**
      * Factory chịu trách nhiệm tạo đối tượng Shape
      */
-    private final ShapeFactory shapeFactory;
+    private ShapeFactory shapeFactory;
 
     /**
-     * View chịu trách nhiệm hiển thị kết quả
+     * Inject shapeFactory từ bên ngoài
+     *
+     * @param shapeFactory dữ liệu cần xử lí
      */
-    private final ShapeView shapeView;
-
-    /**
-     * Khởi tạo Controller với Factory và View mặc định
-     */
-    public ShapeController() {
-        this.shapeFactory = new ShapeFactory();
-        this.shapeView = new ShapeView();
+    public void setShapeFactory(ShapeFactory shapeFactory) {
+        this.shapeFactory = shapeFactory;
     }
 
     /**
@@ -46,8 +42,13 @@ public class ShapeController {
      * @param body   nội dung kết quả
      */
     private void displayResult(String header, String body) {
+        //View chịu trách nhiệm hiển thị kết quả
+        ShapeView shapeView = new ShapeView();
+        //Set header cho view
         shapeView.setHeader(header);
+        //Set body cho view
         shapeView.setBody(body);
+        //Hiển thị kết quả
         shapeView.displayViewShape();
     }
 
@@ -62,6 +63,7 @@ public class ShapeController {
      * @throws AppException nếu dữ liệu không hợp lệ hoặc lỗi tạo Shape
      */
     public void processShape() throws AppException {
+
         try {
             // Kiểm tra DTO đã được truyền vào hay chưa
             if (shapeDTO == null) {

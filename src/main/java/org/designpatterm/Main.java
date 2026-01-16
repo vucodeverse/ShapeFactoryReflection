@@ -3,6 +3,7 @@ package org.designpatterm;
 import org.designpatterm.constant.ShapeName;
 import org.designpatterm.controller.ShapeController;
 import org.designpatterm.dto.ShapeDTO;
+import org.designpatterm.factory.ShapeFactory;
 import org.designpatterm.utils.AppException;
 import org.designpatterm.utils.Validation;
 
@@ -15,11 +16,17 @@ public class Main {
         // Controller điều phối xử lý nghiệp vụ
         ShapeController controller = new ShapeController();
 
+        //ShapeFactory nhận biết đối tưởng
+        ShapeFactory shapeFactory = new ShapeFactory();
+
         // DTO dùng để truyền dữ liệu từ Main sang Controller
         ShapeDTO dto = new ShapeDTO();
 
         // Scanner dùng để nhập dữ liệu từ bàn phím
         Scanner scanner = new Scanner(System.in);
+
+        //Truyền Factory về Controller
+        controller.setShapeFactory(shapeFactory);
 
         boolean running = true;
 

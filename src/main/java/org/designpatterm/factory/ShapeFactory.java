@@ -1,12 +1,10 @@
 package org.designpatterm.factory;
 
 import org.designpatterm.constant.ShapeName;
-import org.designpatterm.dto.ShapeDTO;
 import org.designpatterm.model.Shape;
 import org.designpatterm.utils.AppException;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 
 /**
