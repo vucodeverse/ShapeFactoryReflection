@@ -1,5 +1,6 @@
 package org.designpatterm.factory;
 
+import org.designpatterm.constant.Message;
 import org.designpatterm.constant.ShapeName;
 import org.designpatterm.model.Shape;
 import org.designpatterm.utils.AppException;
@@ -76,13 +77,13 @@ public class ShapeFactory implements ShapeCreator {
 
         } catch (ClassNotFoundException e) {
             // Không tìm thấy class Shape
-            throw new AppException("Không tìm thấy class cho shape: " + shapeName, e);
+            throw new AppException(Message.SHAPE_CLASS_NOT_FOUND.getMsg() + shapeName, e);
         } catch (NoSuchMethodException e) {
             // Không tìm thấy constructor phù hợp
-            throw new AppException("Constructor không phù hợp cho " + shapeName, e);
+            throw new AppException(Message.SHAPE_CONSTRUCTOR_NOT_FOUND.getMsg() + shapeName, e);
         } catch (Exception e) {
             // Các lỗi Reflection khác
-            throw new AppException("Lỗi khi tạo shape: " + shapeName, e);
+            throw new AppException(Message.SHAPE_CREATE_ERROR.getMsg() + shapeName, e);
         }
     }
 }

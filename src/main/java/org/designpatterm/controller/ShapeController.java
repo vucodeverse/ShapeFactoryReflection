@@ -1,5 +1,6 @@
 package org.designpatterm.controller;
 
+import org.designpatterm.constant.Message;
 import org.designpatterm.dto.ShapeDTO;
 import org.designpatterm.factory.ShapeFactory;
 import org.designpatterm.model.Shape;
@@ -67,7 +68,7 @@ public class ShapeController {
         try {
             // Kiểm tra DTO đã được truyền vào hay chưa
             if (shapeDTO == null) {
-                throw new AppException("ShapeDTO chưa được khởi tạo");
+                throw new AppException(Message.SHAPE_DTO_NULL.getMsg());
             }
 
             // Tạo đối tượng Shape dựa trên dữ liệu trong DTO

@@ -1,5 +1,6 @@
 package org.designpatterm.utils;
 
+import org.designpatterm.constant.Message;
 import org.designpatterm.constant.ShapeName;
 
 public class Validation {
@@ -23,7 +24,7 @@ public class Validation {
                 return shapeName;
             }
         }
-        throw new AppException("Unknown shape name: " + name);
+        throw new AppException(Message.UNKNOWN_SHAPE_NAME.getMsg() + name);
     }
 
 
@@ -38,7 +39,7 @@ public class Validation {
         if (value > 0)
             return value;
         else
-            throw new AppException("Please input number > 0");
+            throw new AppException(Message.INVALID_POSITIVE_NUMBER.getMsg());
     }
 
     /**
@@ -51,7 +52,7 @@ public class Validation {
      */
     public static void validateTriangle(double a, double b, double c) throws AppException {
         if (a + b <= c || a + c <= b || b + c <= a) {
-            throw new AppException("Ba cạnh không tạo thành tam giác");
+            throw new AppException(Message.INVALID_TRIANGLE.getMsg());
         }
     }
 
