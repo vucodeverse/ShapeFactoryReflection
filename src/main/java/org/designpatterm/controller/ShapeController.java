@@ -2,7 +2,7 @@ package org.designpatterm.controller;
 
 import org.designpatterm.constant.Message;
 import org.designpatterm.dto.ShapeDTO;
-import org.designpatterm.factory.ShapeFactory;
+import org.designpatterm.factory.ShapeCreator;
 import org.designpatterm.model.Shape;
 import org.designpatterm.utils.AppException;
 import org.designpatterm.view.ShapeView;
@@ -15,16 +15,17 @@ public class ShapeController {
 
     /**
      * Factory chịu trách nhiệm tạo đối tượng Shape
+     * Dependency Injection: phụ thuộc vào interface, không phụ thuộc concrete class
      */
-    private ShapeFactory shapeFactory;
+    private ShapeCreator shapeCreator;
 
     /**
-     * Inject shapeFactory từ bên ngoài
+     * Inject ShapeCreator từ bên ngoài (Dependency Injection)
      *
-     * @param shapeFactory dữ liệu cần xử lí
+     * @param shapeCreator factory tạo shape
      */
-    public void setShapeFactory(ShapeFactory shapeFactory) {
-        this.shapeFactory = shapeFactory;
+    public void setShapeCreator(ShapeCreator shapeCreator) {
+        this.shapeCreator = shapeCreator;
     }
 
     /**
@@ -43,16 +44,15 @@ public class ShapeController {
      * @param body   nội dung kết quả
      */
     private void displayResult(String header, String body) {
-        //View chịu trách nhiệm hiển thị kết quả
+        // View chịu trách nhiệm hiển thị kết quả
         ShapeView shapeView = new ShapeView();
-        //Set header cho view
+        // Set header cho view
         shapeView.setHeader(header);
-        //Set body cho view
+        // Set body cho view
         shapeView.setBody(body);
-        //Hiển thị kết quả
+        // Hiển thị kết quả
         shapeView.displayViewShape();
     }
-
 
     /**
      * Xử lý nghiệp vụ chính:
@@ -72,7 +72,7 @@ public class ShapeController {
             }
 
             // Tạo đối tượng Shape dựa trên dữ liệu trong DTO
-            Shape shape = shapeFactory.createShape(shapeDTO.getShapeName(), shapeDTO.getDimensions());
+            Shape shape = shapeCreator.createShape(shapeDTO.getShapeName(), shapeDTO.getDimensions());
 
             // Tạo header cho bảng kết quả
             String header = String.format("|%-15s|%-15s|%-15s\n", "Shape", "Area", "Perimeter");
@@ -86,6 +86,5 @@ public class ShapeController {
             throw new AppException(e.getMessage());
         }
     }
-
 
 }

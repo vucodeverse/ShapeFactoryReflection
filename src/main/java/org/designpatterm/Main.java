@@ -3,6 +3,7 @@ package org.designpatterm;
 import org.designpatterm.constant.ShapeName;
 import org.designpatterm.controller.ShapeController;
 import org.designpatterm.dto.ShapeDTO;
+import org.designpatterm.factory.ShapeCreator;
 import org.designpatterm.factory.ShapeFactory;
 import org.designpatterm.utils.AppException;
 import org.designpatterm.utils.Validation;
@@ -16,8 +17,8 @@ public class Main {
         // Controller điều phối xử lý nghiệp vụ
         ShapeController controller = new ShapeController();
 
-        //ShapeFactory nhận biết đối tưởng
-        ShapeFactory shapeFactory = new ShapeFactory();
+        // Dependency Injection: khai báo kiểu interface, khởi tạo bằng concrete class
+        ShapeCreator shapeCreator = new ShapeFactory();
 
         // DTO dùng để truyền dữ liệu từ Main sang Controller
         ShapeDTO dto = new ShapeDTO();
@@ -25,8 +26,8 @@ public class Main {
         // Scanner dùng để nhập dữ liệu từ bàn phím
         Scanner scanner = new Scanner(System.in);
 
-        //Truyền Factory về Controller
-        controller.setShapeFactory(shapeFactory);
+        // Inject dependency thông qua setter (Setter Injection)
+        controller.setShapeCreator(shapeCreator);
 
         boolean running = true;
 
@@ -53,26 +54,23 @@ public class Main {
                         // Nhập và validate cạnh a
                         System.out.print("Enter side a: ");
                         double a = Validation.getPositiveNum(
-                                Double.parseDouble(scanner.nextLine())
-                        );
+                                Double.parseDouble(scanner.nextLine()));
 
                         // Nhập và validate cạnh b
                         System.out.print("Enter side b: ");
                         double b = Validation.getPositiveNum(
-                                Double.parseDouble(scanner.nextLine())
-                        );
+                                Double.parseDouble(scanner.nextLine()));
 
                         // Nhập và validate cạnh c
                         System.out.print("Enter side c: ");
                         double c = Validation.getPositiveNum(
-                                Double.parseDouble(scanner.nextLine())
-                        );
+                                Double.parseDouble(scanner.nextLine()));
 
                         // Kiểm tra điều kiện tam giác
                         Validation.validateTriangle(a, b, c);
 
                         // Đóng gói dữ liệu vào DTO
-                        dto.setDimensions(new double[]{a, b, c});
+                        dto.setDimensions(new double[] { a, b, c });
                     }
 
                     // ====== Xử lý hình chữ nhật ======
@@ -83,17 +81,15 @@ public class Main {
                         // Nhập và validate chiều dài
                         System.out.print("Enter length: ");
                         double length = Validation.getPositiveNum(
-                                Double.parseDouble(scanner.nextLine())
-                        );
+                                Double.parseDouble(scanner.nextLine()));
 
                         // Nhập và validate chiều rộng
                         System.out.print("Enter width: ");
                         double width = Validation.getPositiveNum(
-                                Double.parseDouble(scanner.nextLine())
-                        );
+                                Double.parseDouble(scanner.nextLine()));
 
                         // Đóng gói dữ liệu vào DTO
-                        dto.setDimensions(new double[]{length, width});
+                        dto.setDimensions(new double[] { length, width });
                     }
 
                     // ====== Thoát chương trình ======
